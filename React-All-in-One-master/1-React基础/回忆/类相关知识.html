@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      /**
+       *  1. 类中的构造器不是必须要写的，可以继承父类的, 但如果想给实例添加一些自己独有的属性，那么就要写构造器；
+       *  2. 如果A类继承了B类，且A类写了构造器，那么在A类的构造器中必须调用super
+       *  3. 类中的方法是放在类的原型对象(浅色,不被遍历)上的，供实例使用，
+       *      如果是通过实例调用的方法，那么方法中的this就是实例对象
+       */
+
+      // 定义一个Person类
+      class Person {
+        // 构造器
+        constructor(name, age) {
+          // 构造器中的this是谁? ——> 当前类的实例对象
+          this.name = name;
+          this.age = age;
+        }
+
+        // 一般方法
+        /**
+         * 1.speak放在哪里？  ——> Person原型对象上，供实例使用
+         * 2.speak中的this是誰？ ——> 如果speak是通过Person实例调用的，那么this就是Persn实例对象
+         *                          如果speak是通过孩子实例调用的，那么this就是孩子实例对象
+         */
+        speak() {
+          console.log(`我叫${this.name}，我今年${this.age}岁了`);
+        }
+      }
+
+      // 创建一个Person的实例对象
+      const p1 = new Person("张三", 18); //                  此时构造器的this指向Person的实例对象, 即p1
+      console.log(p1); // Person {name: "张三", age: 18}
+
+      // 定义一个Student类继承Person
+      class Student extends Person {
+        constructor(name, age, grade) {
+          // super必须在this之前
+          super(name, age); //super用于给父类传参
+          this.grade = grade; //只有自己独有的参数可以this
+        }
+        speak() {
+          // 重写父类继承过来的方法
+          console.log(`我叫${this.name}，我今年${this.age}岁了，我读${this.grade}`);
+        }
+        study() {
+          console.log("我在努力学习！", this); //this是Student的实例
+        }
+      }
+
+      // 定义一个Car类
+      class Car {
+        // 类能写什么代码？
+
+        // 构造器方法
+        constructor(name, price) {
+          this.name = name;
+          this.price = price;
+        }
+
+        // 一般方法
+        run() {
+          console.log("我正在前进");
+        }
+
+        // 赋值语句，例如 a = 1 ，给实例自身添加一个属性名，名为a
+        a = 1;
+        b = function () {
+          console.log("I'm b");
+        };
+      }
+
+      class Dog {
+        constructor() {}
+        run() {}
+        a = 1;
+        static b = 2;
+      }
+
+      const d = new Dog();
+      console.log(d);
+      console.log(Dog.b); //2  即 b是在Dog类上的
+    </script>
+  </body>
+</html>
