@@ -24,7 +24,7 @@ class Counter extends React.Component {
   }
   changeCount = () => {
     this.setState({
-      count: this.state.count + 3
+      count: this.state.count + 1
     })
   }
   render () {
